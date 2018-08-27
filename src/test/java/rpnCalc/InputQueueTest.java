@@ -27,4 +27,42 @@ public class InputQueueTest {
         InputQueue iq = new InputQueue("1");
         assertEquals(1, iq.size());
     }
+
+    // @Ignore
+    @Test
+    public void constructorWithMultipleTokensIncreasesTheSizeAsMany() {
+        InputQueue iq = new InputQueue("1 2 3");
+        assertEquals(3, iq.size());
+    }
+
+    // @Ignore
+    @Test
+    public void popReturnsNullIfEmptu() {
+        InputQueue iq = new InputQueue();
+        assertNull(iq.pop());
+    }
+
+    // @Ignore
+    @Test
+    public void popRetrievesHead() {
+        InputQueue iq = new InputQueue("1 2 3");
+        assertEquals("1", iq.pop());
+    }
+
+    // @Ignore
+    @Test
+    public void popRemovesHead() {
+        InputQueue iq = new InputQueue("1 2 3");
+        iq.pop();
+        assertEquals("2", iq.pop());
+    }
+
+    // @Ignore
+    @Test
+    public void inputAddsTokensInCorrectOrder() {
+        InputQueue iq = new InputQueue("1 2 3");
+        assertEquals("1", iq.pop());
+        assertEquals("2", iq.pop());
+        assertEquals("3", iq.pop());
+    }
 }
