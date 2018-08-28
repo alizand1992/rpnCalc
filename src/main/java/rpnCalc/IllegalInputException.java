@@ -1,4 +1,4 @@
-package com.rpnCalc;
+package rpnCalc;
 
 import java.lang.Exception;
 

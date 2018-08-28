@@ -1,4 +1,4 @@
-package com.rpnCalc;
+package rpnCalc;
 
 import static org.junit.Assert.*;
 import org.junit.Test;

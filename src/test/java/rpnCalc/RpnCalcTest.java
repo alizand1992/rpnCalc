@@ -1,4 +1,4 @@
-package com.rpnCalc;
+package rpnCalc;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -210,4 +210,22 @@ public class RpnCalcTest {
         rpn.calculate();
         assertEquals(-1.0, rpn.getResult(), DELTA);
     }
+
+    //    @Ignore
+    @Test
+    public void calculateWithThreeDigitsInRow() throws IllegalInputException {
+        RpnCalc rpn = new RpnCalc("1 2 3 + -");
+        rpn.calculate();
+        assertEquals(-4.0, rpn.getResult(), DELTA);
+    }
+
+    // @Ignore
+    @Test
+    public void isOpReturnsTrueForOps() {
+        assertTrue(RpnCalc.isOperator("+"));
+        assertTrue(RpnCalc.isOperator("-"));
+        assertTrue(RpnCalc.isOperator("*"));
+        assertTrue(RpnCalc.isOperator("/"));
+    }
+
 }

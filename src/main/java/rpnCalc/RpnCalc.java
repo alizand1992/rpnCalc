@@ -1,7 +1,7 @@
-package com.rpnCalc;
+package rpnCalc;
 
-import com.rpnCalc.IllegalInputException;
-import com.rpnCalc.InputQueue;
+import rpnCalc.IllegalInputException;
+import rpnCalc.InputQueue;
 
 import java.util.Scanner;
 import java.util.stream.IntStream;
@@ -42,11 +42,14 @@ public class RpnCalc {
         Scanner scanner = new Scanner(System.in);
         String line = "";
         while (true) {
+            System.out.print("q or EOF to exit > ");
+
             line = scanner.nextLine();
+
             if (line.equals("q")) {
                 return;
             }
-            System.out.print("q or EOF to exit > ");
+
             try {
                 this.addInput(line);
                 this.calculate();
@@ -79,9 +82,21 @@ public class RpnCalc {
         }
 
         while (inputs.size() >= 3) {
-            Double lhs = Double.parseDouble(inputs.pop());
-            Double rhs = Double.parseDouble(inputs.pop());
-            char op = inputs.pop().charAt(0);
+            inputs.moveToBuffer();
+
+            if (inputs.peek() == null) {
+                break;
+            }
+
+            if (!inputs.hasEnoughOperands()) {
+                cleanUp();
+                throw new IllegalInputException("Not enought operands before the operator.");
+            }
+
+            char op = inputs.getOperator().charAt(0);;
+            String[] operands = inputs.getOperands();
+            Double lhs = Double.parseDouble(operands[1]);
+            Double rhs = Double.parseDouble(operands[0]);
 
             switch (op) {
             case '+':
@@ -99,7 +114,12 @@ public class RpnCalc {
             }
         }
 
-        result = Double.parseDouble(inputs.peek());
+        if (inputs.size() == 1) {
+            System.out.println("Result: " + inputs.getResult());
+            result = Double.parseDouble(inputs.getResult());
+        } else {
+            System.out.println("Input Buffer: " + inputs.printInputStack());
+        }
     }
 
     public double getResult() {
@@ -136,14 +156,7 @@ public class RpnCalc {
     private void isAllowed(String input) throws IllegalInputException {
         input = input.trim();
         for (String token : input.split(" ")) {
-            boolean isOp = false;
-            for (String op : ALLOWED_OPS) {
-                if (op.equals(token)) {
-                    isOp = true;
-                    break;
-                }
-            }
-
+            boolean isOp = isOperator(token);
             if (!isOp) {
                 try {
                     Double.parseDouble(token);
@@ -152,5 +165,15 @@ public class RpnCalc {
                 }
             }
         }
+    }
+
+    public static boolean isOperator(String token) {
+        for (String op : ALLOWED_OPS) {
+            if (op.equals(token)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
