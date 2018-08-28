@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="13" failures="0" name="com.rpnCalc.InputQueueTest" time="0" errors="0" skipped="0">
+<testsuite tests="13" failures="0" name="com.rpnCalc.InputQueueTest" time="0.001" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="java.vm.version" value="10.0.2+13-Ubuntu-1ubuntu0.18.04.1"/>
@@ -72,7 +72,7 @@
   <testcase classname="com.rpnCalc.InputQueueTest" name="constructorWithOneTokenIncreasesSizeToOne" time="0"/>
   <testcase classname="com.rpnCalc.InputQueueTest" name="popRetrievesHead" time="0"/>
   <testcase classname="com.rpnCalc.InputQueueTest" name="addInputDoesNotDiscardPreviousInputs" time="0"/>
-  <testcase classname="com.rpnCalc.InputQueueTest" name="inputAddsTokensInCorrectOrder" time="0"/>
+  <testcase classname="com.rpnCalc.InputQueueTest" name="inputAddsTokensInCorrectOrder" time="0.001"/>
   <testcase classname="com.rpnCalc.InputQueueTest" name="constructorWithMultipleTokensIncreasesTheSizeAsMany" time="0"/>
   <testcase classname="com.rpnCalc.InputQueueTest" name="defaultConstructorDoesNotIncreaseTheSize" time="0"/>
 </testsuite>

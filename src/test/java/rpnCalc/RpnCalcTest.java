@@ -94,7 +94,7 @@ public class RpnCalcTest {
         }
     }
 
-    @Ignore
+    // @Ignore
     @Test
     public void addInputAddsAsManyAsThereAreTokens() {
         RpnCalc rpn = new RpnCalc();
@@ -113,6 +113,14 @@ public class RpnCalcTest {
             e.printStackTrace();
             fail();
         }
+    }
+
+    @Ignore
+    @Test
+    public void addInputAllowsMathOperators() throws IllegalInputException {
+        RpnCalc rpn = new RpnCalc();
+        rpn.addInput("+");
+
     }
 
     @Ignore

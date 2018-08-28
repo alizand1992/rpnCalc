@@ -15,7 +15,7 @@ public class RpnCalc {
     }
 
     public void addInput(String input) {
-
+        inputs.addInput(input);
     }
 
     public void calculate() {
