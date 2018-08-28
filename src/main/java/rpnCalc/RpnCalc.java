@@ -1,5 +1,6 @@
 package com.rpnCalc;
 
+import com.rpnCalc.IllegalInputException;
 import com.rpnCalc.InputQueue;
 
 public class RpnCalc {

@@ -1,2 +1,3 @@
 com/rpnCalc/RpnCalc.class
 com/rpnCalc/InputQueue.class
+com/rpnCalc/IllegalInputException.class
