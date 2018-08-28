@@ -5,20 +5,22 @@ import org.junit.Test;
 
 import java.lang.reflect.Field;
 
+import java.math.BigDecimal;
+
 import org.junit.Ignore;
 import org.junit.Test;
 
 public class RpnCalcTest {
     private static final double DELTA = 1e-15;
 
-    //    @Ignore
+    // @Ignore
     @Test
     public void emptyConstructorHasResultOfZero() {
         RpnCalc rpn = new RpnCalc();
-        assertEquals(0.0, rpn.getResult(), DELTA);
+        assertEquals(new BigDecimal(0.0), rpn.getResult());
     }
 
-    //    @Ignore
+    // @Ignore
     @Test
     public void emptyConstructorHasInputsSetToNull() {
         try {
@@ -36,7 +38,7 @@ public class RpnCalcTest {
         }
     }
 
-    //    @Ignore
+    // @Ignore
     @Test
     public void constructorWithInputAddsToTheInputs() {
         try {
@@ -74,12 +76,12 @@ public class RpnCalcTest {
         }
     }
 
-    //    @Ignore
+    // @Ignore
     @Test
     public void addInputCreatesInputButDoesNothingForEmptyInput() throws IllegalInputException {
         RpnCalc rpn = new RpnCalc();
         rpn.addInput("");
-        assertEquals(0.0, rpn.getResult(), DELTA);
+        assertEquals(new BigDecimal(0.0), rpn.getResult());
         try {
             Field field = rpn.getClass().getDeclaredField("inputs");
             field.setAccessible(true);
@@ -151,56 +153,56 @@ public class RpnCalcTest {
     public void calculateDoesNothingWhenThereAreNoInputs() throws IllegalInputException {
         RpnCalc rpn = new RpnCalc();
         rpn.calculate();
-        assertEquals(0.0, rpn.getResult(), DELTA);
+        assertEquals(new BigDecimal(0.0), rpn.getResult());
 
         rpn.addInput("1 2");
         rpn.calculate();
-        assertEquals(0.0, rpn.getResult(), DELTA);
+        assertEquals(new BigDecimal(0.0), rpn.getResult());
     }
 
     // @Ignore
     @Test
     public void calculateAddsTwoNumbersIfThereAreSufficientInputs() throws IllegalInputException {
         RpnCalc rpn = new RpnCalc("1 2 +");
-        assertEquals(0.0, rpn.getResult(), DELTA);
+        assertEquals(new BigDecimal(0.0), rpn.getResult());
         rpn.calculate();
-        assertEquals(3.0, rpn.getResult(), DELTA);
+        assertEquals(new BigDecimal(3.0), rpn.getResult());
     }
 
     // @Ignore
     @Test
     public void calculateDeductsTwoNumbersIfThereAreSuffientInputs() throws IllegalInputException {
         RpnCalc rpn = new RpnCalc("1 2 -");
-        assertEquals(0.0, rpn.getResult(), DELTA);
+        assertEquals(new BigDecimal(0.0), rpn.getResult());
         rpn.calculate();
-        assertEquals(-1.0, rpn.getResult(), DELTA);
+        assertEquals(new BigDecimal(-1.0), rpn.getResult());
     }
 
     // @Ignore
     @Test
     public void calculateMultiplesTwoNumbersIfThereAreSufficientInputs() throws IllegalInputException {
         RpnCalc rpn = new RpnCalc("2 3 *");
-        assertEquals(0.0, rpn.getResult(), DELTA);
+        assertEquals(new BigDecimal(0.0), rpn.getResult());
         rpn.calculate();
-        assertEquals(6.0, rpn.getResult(), DELTA);
+        assertEquals(new BigDecimal(6.0), rpn.getResult());
     }
 
     // @Ignore
     @Test
     public void calculateDividesTwoNumbersIfThereAreSufficientInputs() throws IllegalInputException {
         RpnCalc rpn = new RpnCalc("5 2 /");
-        assertEquals(0.0, rpn.getResult(), DELTA);
+        assertEquals(new BigDecimal(0.0), rpn.getResult());
         rpn.calculate();
-        assertEquals(2.5, rpn.getResult(), DELTA);
+        assertEquals(new BigDecimal(2.5), rpn.getResult());
     }
 
     // @Ignore
     @Test(expected = IllegalInputException.class)
     public void calculateHandlesDivisionByZero() throws IllegalInputException {
         RpnCalc rpn = new RpnCalc("5 0 /");
-        assertEquals(0.0, rpn.getResult(), DELTA);
+        assertEquals(new BigDecimal(0.0), rpn.getResult());
         rpn.calculate();
-        assertEquals(0.0, rpn.getResult(), DELTA);
+        assertEquals(new BigDecimal(0.0), rpn.getResult());
     }
 
     // @Ignore
@@ -208,15 +210,15 @@ public class RpnCalcTest {
     public void calculateHandlesMoreThanOneIteration() throws IllegalInputException {
         RpnCalc rpn = new RpnCalc("1 2 + 4 -");
         rpn.calculate();
-        assertEquals(-1.0, rpn.getResult(), DELTA);
+        assertEquals(new BigDecimal(-1.0), rpn.getResult());
     }
 
-    //    @Ignore
+    // @Ignore
     @Test
     public void calculateWithThreeDigitsInRow() throws IllegalInputException {
         RpnCalc rpn = new RpnCalc("1 2 3 + -");
         rpn.calculate();
-        assertEquals(-4.0, rpn.getResult(), DELTA);
+        assertEquals(new BigDecimal(-4.0), rpn.getResult());
     }
 
     // @Ignore

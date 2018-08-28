@@ -3,6 +3,8 @@ package rpnCalc;
 import rpnCalc.IllegalInputException;
 import rpnCalc.InputQueue;
 
+import java.math.BigDecimal;
+
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -14,7 +16,7 @@ public class RpnCalc {
         "/"
     };
 
-    private double result;
+    private BigDecimal result;
     private InputQueue inputs;
 
     public static void main(String[] args) {
@@ -65,6 +67,7 @@ public class RpnCalc {
 
     public RpnCalc(String input) {
         inputs = new InputQueue(input);
+        result = new BigDecimal(0);
     }
 
     public void addInput(String input) throws IllegalInputException {
@@ -95,8 +98,8 @@ public class RpnCalc {
 
             char op = inputs.getOperator().charAt(0);;
             String[] operands = inputs.getOperands();
-            Double lhs = Double.parseDouble(operands[1]);
-            Double rhs = Double.parseDouble(operands[0]);
+            BigDecimal lhs = new BigDecimal(operands[1]);
+            BigDecimal rhs = new BigDecimal(operands[0]);
 
             switch (op) {
             case '+':
@@ -116,41 +119,41 @@ public class RpnCalc {
 
         if (inputs.size() == 1) {
             System.out.println("Result: " + inputs.getResult());
-            result = Double.parseDouble(inputs.getResult());
+            result = new BigDecimal(inputs.getResult());
         } else {
             System.out.println("Input Buffer: " + inputs.printInputStack());
         }
     }
 
-    public double getResult() {
+    public BigDecimal getResult() {
         return result;
     }
 
-    private Double add(double lhs, double rhs) {
-        return lhs + rhs;
+    private BigDecimal add(BigDecimal lhs, BigDecimal rhs) {
+        return lhs.add(rhs);
     }
 
-    private Double deduct(double lhs, double rhs) {
-        return lhs - rhs;
+    private BigDecimal deduct(BigDecimal lhs, BigDecimal rhs) {
+        return lhs.subtract(rhs);
     }
 
-    private Double multiple(double lhs, double rhs) {
-        return lhs * rhs;
+    private BigDecimal multiple(BigDecimal lhs, BigDecimal rhs) {
+        return lhs.multiply(rhs);
     }
 
-    private Double divide(double lhs, double rhs) throws IllegalInputException {
-        if (rhs == 0.0) {
+    private BigDecimal divide(BigDecimal lhs, BigDecimal rhs) throws IllegalInputException {
+        if (rhs.equals(new BigDecimal(0.0))) {
             System.err.println("Division by 0 is not allowed. Cleaning up now...");
             cleanUp();
             throw new IllegalInputException("Division by 0 is not allowed.");
         }
 
-        return lhs / rhs;
+        return lhs.divide(rhs);
     }
 
     private void cleanUp() {
         inputs = new InputQueue();
-        result = 0;
+        result = new BigDecimal(0);
     }
 
     private void isAllowed(String input) throws IllegalInputException {

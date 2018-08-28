@@ -75,7 +75,7 @@ public class InputQueueTest {
         assertEquals(3, iq.size());
     }
 
-    //    @Ignore
+    // @Ignore
     @Test
     public void addInputDoesNothingWithWhiteSpaceInput() {
         InputQueue iq = new InputQueue();
@@ -84,7 +84,7 @@ public class InputQueueTest {
         assertEquals(0, iq.size());
     }
 
-    //    @Ignore
+    // @Ignore
     @Test
     public void addInputAddsAsManyTokensAsInInput() {
         InputQueue iq = new InputQueue();
