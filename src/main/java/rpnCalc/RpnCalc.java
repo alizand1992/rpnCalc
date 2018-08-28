@@ -3,7 +3,8 @@ package com.rpnCalc;
 import com.rpnCalc.IllegalInputException;
 import com.rpnCalc.InputQueue;
 
-import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class RpnCalc {
     private static final String[] ALLOWED_OPS = {
@@ -15,6 +16,45 @@ public class RpnCalc {
 
     private double result;
     private InputQueue inputs;
+
+    public static void main(String[] args) {
+        RpnCalc rpn = new RpnCalc();
+        System.out.println("---=== Welcome To RealPage RPN Calculator ===---");
+
+        if (args.length > 1) {
+            String argsInput = String.join(" ", IntStream.range(1, args.length - 1)
+                                           .mapToObj(i -> args[i])
+                                           .toArray(String[]::new));
+
+            System.out.println("q or EOF to exit > " + argsInput);
+            try {
+                rpn.addInput(argsInput);
+                rpn.calculate();
+            } catch (IllegalInputException e) {
+                System.err.println("Illegal input detected, please enter a valid input...");
+            }
+        }
+
+        rpn.requestInput();
+    }
+
+    public void requestInput() {
+        Scanner scanner = new Scanner(System.in);
+        String line = "";
+        while (true) {
+            line = scanner.nextLine();
+            if (line.equals("q")) {
+                return;
+            }
+            System.out.print("q or EOF to exit > ");
+            try {
+                this.addInput(line);
+                this.calculate();
+            } catch (IllegalInputException e) {
+                System.err.println("Illegal input detected, please enter a valid input...");
+            }
+        }
+    }
 
     public RpnCalc() {
         this("");
