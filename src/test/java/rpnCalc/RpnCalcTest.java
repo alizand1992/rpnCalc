@@ -94,7 +94,7 @@ public class RpnCalcTest {
         }
     }
 
-    // @Ignore
+    @Ignore
     @Test
     public void addInputAddsAsManyAsThereAreTokens() {
         RpnCalc rpn = new RpnCalc();

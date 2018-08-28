@@ -11,14 +11,7 @@ public class InputQueue {
 
     public InputQueue(String input) {
         inputs = new LinkedList<String>();
-
-        if (input.equals("")) {
-            return;
-        }
-
-        for (String token : input.split(" ")) {
-            inputs.add(token);
-        }
+        addInput(input);
     }
 
     public int size() {
@@ -27,5 +20,15 @@ public class InputQueue {
 
     public String pop() {
         return inputs.poll();
+    }
+
+    public void addInput(String input) {
+        if (input.equals("")) {
+            return;
+        }
+
+        for (String token : input.split(" ")) {
+            inputs.add(token);
+        }
     }
 }
