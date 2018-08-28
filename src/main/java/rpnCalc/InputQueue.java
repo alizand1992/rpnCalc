@@ -43,7 +43,7 @@ public class InputQueue {
     }
 
     public void moveToBuffer() {
-        while (inputs.size() != 0 && !RpnCalc.isOperator(inputs.peek())) {
+        while (!inputs.isEmpty() && !RpnCalc.isOperator(inputs.peek())) {
             buffer.push(inputs.pop());
         }
     }
@@ -76,12 +76,14 @@ public class InputQueue {
     }
 
     public void addInput(String input) {
+        input = input.trim();
+
         if (input.equals("")) {
             return;
         }
 
         for (String token : input.split(" ")) {
-            inputs.add(token);
+            inputs.add(token.trim());
         }
     }
 }
