@@ -4,10 +4,10 @@ import java.lang.Exception;
 
 public class IllegalInputException extends Exception {
     public IllegalInputException() {
-        super("", null);
+        super("");
     }
 
-    public IllegalInputException(String message, Throwable cause) {
-        super(message, cause);
+    public IllegalInputException(String message) {
+        super(message);
     }
 }

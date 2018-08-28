@@ -22,6 +22,17 @@ public class InputQueue {
         return inputs.poll();
     }
 
+    public String peek() {
+        return inputs.peek();
+    }
+
+    public void addToHead(String input) {
+        if (input.trim().equals("")) {
+            return;
+        }
+        inputs.addFirst(input);
+    }
+
     public void addInput(String input) {
         if (input.equals("")) {
             return;

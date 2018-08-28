@@ -76,7 +76,7 @@ public class RpnCalcTest {
 
     //    @Ignore
     @Test
-    public void addInputCreatesInputButDoesNothingForEmptyInput() {
+    public void addInputCreatesInputButDoesNothingForEmptyInput() throws IllegalInputException {
         RpnCalc rpn = new RpnCalc();
         rpn.addInput("");
         assertEquals(0.0, rpn.getResult(), DELTA);
@@ -96,7 +96,7 @@ public class RpnCalcTest {
 
     // @Ignore
     @Test
-    public void addInputAddsAsManyAsThereAreTokens() {
+    public void addInputAddsAsManyAsThereAreTokens() throws IllegalInputException {
         RpnCalc rpn = new RpnCalc();
         rpn.addInput("1 2 3");
         try {
@@ -115,19 +115,99 @@ public class RpnCalcTest {
         }
     }
 
-    @Ignore
-    @Test
-    public void addInputAllowsMathOperators() throws IllegalInputException {
+    // @Ignore
+    @Test(expected = IllegalInputException.class)
+    public void addInputThrowsExceptionForNonAuthorizedCharacters() throws IllegalInputException {
         RpnCalc rpn = new RpnCalc();
-        rpn.addInput("+");
-
+        rpn.addInput("a");
+        rpn.addInput("b");
+        rpn.addInput("c");
+        rpn.addInput("d");
     }
 
-    @Ignore
+    // @Ignore
     @Test
-    public void calculateDoesNothingWhenThereAreNoInputs() {
+    public void addInputDoesNotThrowExceptionForAllowedOps() throws IllegalInputException {
+        RpnCalc rpn = new RpnCalc();
+        rpn.addInput("+");
+        rpn.addInput("-");
+        rpn.addInput("*");
+        rpn.addInput("/");
+    }
+
+    // @Ignore
+    @Test
+    public void addInputDoesNotThrowExceptionForNumbers() throws IllegalInputException {
+        RpnCalc rpn = new RpnCalc();
+        rpn.addInput("1");
+        rpn.addInput("+1");
+        rpn.addInput("-1");
+        rpn.addInput("1.2");
+        rpn.addInput(".2");
+    }
+
+    // @Ignore
+    @Test
+    public void calculateDoesNothingWhenThereAreNoInputs() throws IllegalInputException {
         RpnCalc rpn = new RpnCalc();
         rpn.calculate();
         assertEquals(0.0, rpn.getResult(), DELTA);
+
+        rpn.addInput("1 2");
+        rpn.calculate();
+        assertEquals(0.0, rpn.getResult(), DELTA);
+    }
+
+    // @Ignore
+    @Test
+    public void calculateAddsTwoNumbersIfThereAreSufficientInputs() throws IllegalInputException {
+        RpnCalc rpn = new RpnCalc("1 2 +");
+        assertEquals(0.0, rpn.getResult(), DELTA);
+        rpn.calculate();
+        assertEquals(3.0, rpn.getResult(), DELTA);
+    }
+
+    // @Ignore
+    @Test
+    public void calculateDeductsTwoNumbersIfThereAreSuffientInputs() throws IllegalInputException {
+        RpnCalc rpn = new RpnCalc("1 2 -");
+        assertEquals(0.0, rpn.getResult(), DELTA);
+        rpn.calculate();
+        assertEquals(-1.0, rpn.getResult(), DELTA);
+    }
+
+    // @Ignore
+    @Test
+    public void calculateMultiplesTwoNumbersIfThereAreSufficientInputs() throws IllegalInputException {
+        RpnCalc rpn = new RpnCalc("2 3 *");
+        assertEquals(0.0, rpn.getResult(), DELTA);
+        rpn.calculate();
+        assertEquals(6.0, rpn.getResult(), DELTA);
+    }
+
+    // @Ignore
+    @Test
+    public void calculateDividesTwoNumbersIfThereAreSufficientInputs() throws IllegalInputException {
+        RpnCalc rpn = new RpnCalc("5 2 /");
+        assertEquals(0.0, rpn.getResult(), DELTA);
+        rpn.calculate();
+        assertEquals(2.5, rpn.getResult(), DELTA);
+    }
+
+    // @Ignore
+    @Test(expected = IllegalInputException.class)
+    public void calculateHandlesDivisionByZero() throws IllegalInputException {
+        RpnCalc rpn = new RpnCalc("5 0 /");
+        assertEquals(0.0, rpn.getResult(), DELTA);
+        rpn.calculate();
+        assertEquals(0.0, rpn.getResult(), DELTA);
+    }
+
+    // @Ignore
+    @Test
+    public void calculateHandlesMoreThanOneIteration() throws IllegalInputException {
+        RpnCalc rpn = new RpnCalc("1 2 + 4 -");
+        rpn.calculate();
+        assertEquals(-1.0, rpn.getResult(), DELTA);
     }
 }
